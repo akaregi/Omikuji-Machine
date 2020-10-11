@@ -7,7 +7,7 @@
     </div>
 
     <div class="copy">
-      <p>あかれぎの今日の運勢は **{{ state.result }}** であります<br/><span class="tag">#今日の御神籤 #御神籤</span></p>
+      <p>こいつの今日の運勢は **{{ state.result }}** であります<br/><span class="tag">#今日の御神籤 #御神籤</span></p>
     </div>
 
     <button class="button" v-on:click="update">やり直してみる</button>
