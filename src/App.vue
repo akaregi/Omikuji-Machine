@@ -1,0 +1,35 @@
+<template>
+  <omikuji-view/>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import OmikujiView from './components/OmikujiView.vue'
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    OmikujiView
+  }
+})
+</script>
+
+<style>
+#app {
+  font-family:
+    BlinkMacSystemFont,-apple-system,
+    Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
+    Fira Sans,Droid Sans,Helvetica Neue,Helvetica,Arial,
+    "Yu Gothic Medium",YuGothic,sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-feature-settings: "palt";
+
+  text-align: center;
+  color: #2c3e50;
+
+  margin-top: 8rem;
+}
+</style>
