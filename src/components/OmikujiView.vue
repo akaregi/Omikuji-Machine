@@ -2,13 +2,8 @@
   <div class="omikuji">
     <h1 class="title">伊予神社・御神籤処</h1>
 
-    <div class="result">
-      <p>{{ state.result }}</p>
-    </div>
-
-    <div class="copy">
-      <p>こいつの今日の運勢は **{{ state.result }}** であります<br/><span class="tag">#今日の御神籤 #御神籤</span></p>
-    </div>
+    <Result :result="state.result" />
+    <copy-field :result="state.result" />
 
     <button class="button" v-on:click="update">やり直してみる</button>
   </div>
@@ -18,8 +13,16 @@
 import { defineComponent, reactive } from 'vue'
 import { choice } from '@/lib/Omikuji'
 
+import Result from '@/components/Result.vue'
+import CopyField from '@/components/CopyField.vue'
+
 export default defineComponent({
   name: 'OmikujiView',
+
+  components: {
+    Result,
+    CopyField
+  },
 
   setup () {
     const state = reactive({
@@ -46,25 +49,6 @@ export default defineComponent({
   font-size: 4rem;
 
   margin: 3rem 0;
-}
-
-.result {
-  margin: 2rem 0;
-  padding: 1rem;
-
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.copy {
-  margin: 2rem 0;
-  border: 3px solid #efefef;
-
-  font-size: 1.3rem;
-}
-
-.tag {
-  color: #502fd4;
 }
 
 .button {
