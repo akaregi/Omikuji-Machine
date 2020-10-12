@@ -15,7 +15,8 @@ export default defineComponent({
 </script>
 
 <style>
-#app {
+body {
+  font-size: 24px;
   font-family:
     BlinkMacSystemFont,-apple-system,
     Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
@@ -24,12 +25,12 @@ export default defineComponent({
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   font-feature-settings: "palt";
 
-  text-align: center;
   color: #2c3e50;
+  text-align: center;
+  line-height: 1.47;
 
-  margin-top: 8rem;
+  padding-top: 4rem;
 }
 </style>
