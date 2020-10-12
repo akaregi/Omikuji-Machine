@@ -1,13 +1,17 @@
 <template>
-  <div class="copy">
-    <p id="copy-text">こいつの今日の運勢は **{{ result }}** であります<br/><span class="tag">#今日の御神籤 #御神籤</span></p>
+  <div class="copy-field" v-on:click="onCopy">
+    <div class="copy">
+      <p id="copy-text">{{ state.name }}の今日の運勢は<wbr/><strong>{{ state.result }}</strong>であります<br/><span class="tag">#今日の御神籤 #御神籤</span></p>
+    </div>
+    <p class="footnote">※ クリックでコピーできます</p>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
-type Props = {
+type State = {
+  name: string;
   result: string;
 }
 
@@ -15,26 +19,52 @@ export default defineComponent({
   name: 'Copy',
 
   props: {
-    result: {
-      type: String,
-      default: '無'
+    state: Object as PropType<State>
+  },
+
+  setup (props) {
+    const onCopy = () => {
+      const state = props.state
+      navigator.clipboard.writeText(
+        `${state?.name}の今日の運勢は **${state?.result}** であります` +
+        '\n' +
+        '#今日の御神籤 #御神籤'
+      )
     }
+
+    return { onCopy }
   }
 })
 </script>
 
 <style scoped>
-.copy {
+.copy-field {
   margin: 2rem 0;
+}
+
+.copy {
   border: 3px solid #efefef;
+  padding: 1rem;
 
-  font-size: 1.3rem;
+  cursor: pointer;
+  user-select: none;
 
-  cursor: text;
-  /* user-select: none; */
+  white-space: pre;
+
+  transition: background-color;
+  transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition-duration: 1s;
+}
+
+.copy:active {
+  background: #e2dcf8;
 }
 
 .tag {
   color: #502fd4;
+}
+
+.footnote {
+  margin: 0;
 }
 </style>

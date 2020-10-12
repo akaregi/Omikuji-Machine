@@ -1,37 +1,59 @@
 <template>
   <div class="omikuji">
-    <h1 class="title">伊予神社・御神籤処</h1>
+    <h1 class="title">伊予神社<br/>御神籤処</h1>
 
-    <Result :result="state.result" />
-    <copy-field :result="state.result" />
+    <div class="legend" data-clipboard-target="#copy-text">
+      <label for="name">貴方のお名前は?</label><br/>
+      <input class="name" id="name" type="text" v-model="state.name">
+    </div>
 
-    <button class="button" v-on:click="update">やり直してみる</button>
+    <copy-field :state="state" />
+
+    <button class="update" v-on:click="update">引き直す</button>
+
+    <Footer />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, onMounted, reactive, watch } from 'vue'
 import { choice } from '@/lib/Omikuji'
 
-import Result from '@/components/Result.vue'
 import CopyField from '@/components/CopyField.vue'
+import Footer from '@/components/Footer.vue'
+
+import Clipboard from 'clipboard'
 
 export default defineComponent({
   name: 'OmikujiView',
 
   components: {
-    Result,
-    CopyField
+    CopyField,
+    Footer
   },
 
   setup () {
     const state = reactive({
-      result: choice()
+      result: choice(),
+      name: 'こいつ'
     })
 
     const update = () => {
       state.result = choice()
     }
+
+    onMounted(() => {
+      if (localStorage.name) {
+        state.name = localStorage.name
+      }
+
+      // eslint-disable-next-line no-new
+      new Clipboard('.legend')
+    })
+
+    watch(() => state.name, (newName) => {
+      localStorage.name = newName
+    })
 
     return { state, update }
   }
@@ -41,26 +63,46 @@ export default defineComponent({
 <style scoped>
 .omikuji {
   max-width: 768px;
+
   margin: 0 auto;
+  padding: 0 3rem;
 }
 
 .title {
   font-weight: normal;
   font-size: 4rem;
 
-  margin: 3rem 0;
+  line-height: 1;
+
+  display: inline-block;
+
+  margin: 0;
+  margin-bottom: 2rem;
+  border-top: 3px solid;
+  border-bottom: 3px solid;
+  padding: 1rem 5rem;
+
+  white-space: pre;
 }
 
-.button {
+button, input {
   font-size: 1.2rem;
   padding: .5rem;
 
   border: 2px solid #d3d4dd;
   background: transparent;
-  border-radius: 3px;
 }
 
-.button:hover {
-  background: #eeeeee;
+button {
+  border-radius: 5px;
+}
+
+.name {
+  margin-top: .5rem;
+  text-align: center;
+}
+
+.update:hover {
+  background: #f6f6f6;
 }
 </style>
