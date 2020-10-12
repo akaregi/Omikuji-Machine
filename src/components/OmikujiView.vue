@@ -2,7 +2,7 @@
   <div class="omikuji">
     <h1 class="title">伊予神社<br/>御神籤処</h1>
 
-    <div class="legend" data-clipboard-target="#copy-text">
+    <div class="legend">
       <label for="name">貴方のお名前は?</label><br/>
       <input class="name" id="name" type="text" v-model="state.name">
     </div>
@@ -21,8 +21,6 @@ import { choice } from '@/lib/Omikuji'
 
 import CopyField from '@/components/CopyField.vue'
 import Footer from '@/components/Footer.vue'
-
-import Clipboard from 'clipboard'
 
 export default defineComponent({
   name: 'OmikujiView',
@@ -46,9 +44,6 @@ export default defineComponent({
       if (localStorage.name) {
         state.name = localStorage.name
       }
-
-      // eslint-disable-next-line no-new
-      new Clipboard('.legend')
     })
 
     watch(() => state.name, (newName) => {
@@ -62,7 +57,7 @@ export default defineComponent({
 
 <style scoped>
 .omikuji {
-  max-width: 768px;
+  max-width: 500px;
 
   margin: 0 auto;
   padding: 0 3rem;
