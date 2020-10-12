@@ -69,8 +69,6 @@ export default defineComponent({
 
   line-height: 1;
 
-  display: inline-block;
-
   margin: 0;
   margin-bottom: 2rem;
   border-top: 3px solid;

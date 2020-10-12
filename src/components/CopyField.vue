@@ -3,7 +3,7 @@
     <div class="copy">
       <p id="copy-text">{{ state.name }}の今日の運勢は<wbr/><strong>{{ state.result }}</strong>であります<br/><span class="tag">#今日の御神籤 #御神籤</span></p>
     </div>
-    <p class="footnote">※ クリックでコピーできます</p>
+    <p class="footnote">※ 枠内をクリックでコピーできます</p>
   </div>
 </template>
 
@@ -66,5 +66,6 @@ export default defineComponent({
 
 .footnote {
   margin: 0;
+  margin-top: .5rem;
 }
 </style>
