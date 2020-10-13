@@ -31,6 +31,10 @@ body {
   text-align: center;
   line-height: 1.47;
 
-  padding-top: 4rem;
+  max-width: 500px;
+
+  margin: 0 auto !important;
+  margin-top: 6rem !important;
+  padding: 2rem;
 }
 </style>

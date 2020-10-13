@@ -1,8 +1,11 @@
 <template>
-  <div class="copy-field" v-on:click="onCopy">
-    <div class="copy">
-      <p id="copy-text">{{ state.name }}の今日の運勢は<wbr/><strong>{{ state.result }}</strong>であります<br/><span class="tag">#今日の御神籤 #御神籤</span></p>
-    </div>
+  <div class="result-page" v-on:click="onCopy">
+    <p class="copy">
+      <span>{{ state.name }}の今日の運勢は</span>
+      <span class="result">{{ state.result }}</span>
+      <span>であります</span>
+      <span class="tag">#今日の御神籤 #御神籤</span>
+    </p>
     <p class="footnote">※ 枠内をクリックでコピーできます</p>
   </div>
 </template>
@@ -16,7 +19,7 @@ type State = {
 }
 
 export default defineComponent({
-  name: 'Copy',
+  name: 'Result',
 
   props: {
     state: Object as PropType<State>
@@ -26,9 +29,9 @@ export default defineComponent({
     const onCopy = () => {
       const state = props.state
       navigator.clipboard.writeText(
-        `${state?.name}の今日の運勢は **${state?.result}** であります` +
-        '\n' +
-        '#今日の御神籤 #御神籤'
+        `${state?.name}の今日の運勢は **${state?.result}** であります\n` +
+        '#今日の御神籤 #御神籤\n' +
+        'https://omikuji.fedyya.net'
       )
     }
 
@@ -38,26 +41,37 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.copy-field {
+.result-page {
   margin: 2rem 0;
 }
 
 .copy {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
   border: 3px solid #efefef;
-  padding: 1rem;
+  padding: 2rem;
 
   cursor: pointer;
   user-select: none;
 
-  white-space: pre;
-
   transition: background-color;
-  transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition-timing-function: cubic-bezier(0.07, 0.91, 0.24, 1);
   transition-duration: 1s;
 }
 
 .copy:active {
-  background: #e2dcf8;
+  background: #ddf8dc;
+}
+
+.result {
+  font-size: 3rem;
+  font-weight: bold;
+
+  line-height: 1.2;
+
+  margin: .5rem 0;
 }
 
 .tag {
@@ -66,6 +80,5 @@ export default defineComponent({
 
 .footnote {
   margin: 0;
-  margin-top: .5rem;
 }
 </style>
