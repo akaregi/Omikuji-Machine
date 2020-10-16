@@ -31,11 +31,13 @@ export default defineComponent({
   setup () {
     const state = reactive({
       result: choice(),
-      name: 'こいつ'
+      name: 'こいつ',
+      count: 1
     })
 
     const update = () => {
       state.result = choice()
+      state.count += 1
     }
 
     onMounted(() => {

@@ -16,6 +16,7 @@ import { defineComponent, PropType } from 'vue'
 type State = {
   name: string;
   result: string;
+  count: number;
 }
 
 export default defineComponent({
@@ -28,8 +29,16 @@ export default defineComponent({
   setup (props) {
     const onCopy = () => {
       const state = props.state
+
+      const reset = state?.count
+        ? state.count > 2
+          ? `\n（引き直し${state.count}回）\n`
+          : '\n'
+        : '\n'
+
       navigator.clipboard.writeText(
-        `${state?.name}の今日の運勢は **${state?.result}** であります\n` +
+        `${state?.name}の今日の運勢は **${state?.result}** であります` +
+        reset +
         '#今日の御神籤 #御神籤\n' +
         'https://omikuji.fedyya.net'
       )
