@@ -30,14 +30,12 @@ export default defineComponent({
     const onCopy = () => {
       const state = props.state
 
-      const reset = state?.count
-        ? state.count > 1
-          ? `\n（引き直し${state.count}回）\n`
-          : '\n'
+      const reset = (state?.count ?? 0) >= 1
+        ? `\n（引き直し${state?.count}回）\n`
         : '\n'
 
       navigator.clipboard.writeText(
-        `${state?.name}の今日の運勢は **${state?.result}** であります` +
+        `${state?.name ?? 'こいつ'}の今日の運勢は **${state?.result ?? '無'}** であります` +
         reset +
         '#今日の御神籤 #御神籤\n' +
         'https://omikuji.fedyya.net'
