@@ -32,7 +32,7 @@ export default defineComponent({
     const state = reactive({
       result: choice(),
       name: 'こいつ',
-      count: 1
+      count: 0
     })
 
     const update = () => {

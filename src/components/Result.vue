@@ -31,7 +31,7 @@ export default defineComponent({
       const state = props.state
 
       const reset = state?.count
-        ? state.count > 2
+        ? state.count > 1
           ? `\n（引き直し${state.count}回）\n`
           : '\n'
         : '\n'
