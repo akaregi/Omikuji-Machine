@@ -28,6 +28,8 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.0.0-0",
     "normalize.css": "^8.0.1",
+    "postcss-nested": "4.2.3",
+    "tailwindcss": "^1.9.4",
     "typescript": "~3.9.3"
   }
 }
