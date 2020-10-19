@@ -1,8 +1,8 @@
 <template>
-  <div class="result-page" v-on:click="onCopy">
+  <div class="result" v-on:click="onCopy">
     <p class="copy">
       <span>{{ state.name }}の今日の運勢は</span>
-      <span class="result">{{ state.result }}</span>
+      <span class="wow"><strong>{{ state.result }}</strong></span>
       <span>であります</span>
       <span class="tag">#今日の御神籤 #御神籤</span>
     </p>
@@ -47,45 +47,32 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-.result-page {
-  margin: 2rem 0;
+<style lang="postcss" scoped>
+.result {
+  @apply my-8;
 }
 
 .copy {
-  display: flex;
-  flex-direction: column;
+  @apply my-4 p-4;
+  @apply cursor-pointer select-none;
+  @apply rounded-md shadow-xl bg-white;
+  @apply transition duration-300 ease-in-out;
 
-  margin: 0;
-  border: 3px solid #efefef;
-  padding: 2rem;
+  &:active {
+    @apply bg-green-200;
+  }
 
-  cursor: pointer;
-  user-select: none;
+  & .wow {
+    @apply my-2;
+    @apply leading-tight text-4xl;
+  }
 
-  transition: background-color;
-  transition-timing-function: cubic-bezier(0.07, 0.91, 0.24, 1);
-  transition-duration: 1s;
-}
+  & .tag {
+    @apply text-indigo-500;
+  }
 
-.copy:active {
-  background: #ddf8dc;
-}
-
-.result {
-  font-size: 3rem;
-  font-weight: bold;
-
-  line-height: 1.2;
-
-  margin: .5rem 0;
-}
-
-.tag {
-  color: #502fd4;
-}
-
-.footnote {
-  margin: 0;
+  & span {
+    @apply block;
+  }
 }
 </style>

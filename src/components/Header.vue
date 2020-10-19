@@ -1,20 +1,27 @@
 <template>
   <header class="header">
-    <h1 class="title">伊予神社<br/>御神籤処</h1>
+    <h1 class="title">
+      <span>伊予神社</span>
+      <span>御神籤処</span>
+    </h1>
   </header>
 </template>
 
-<style scoped>
-.title {
-  font-weight: normal;
-  font-size: 4rem;
+<style lang="postcss" scoped>
+.header {
+  @apply my-8;
 
-  line-height: 1;
+  & .title {
+    @apply flex flex-wrap justify-center;
+    @apply py-4;
+    @apply leading-tight text-4xl;
 
-  margin: 0;
-  margin-bottom: 2rem;
-  border-top: 3px solid;
-  border-bottom: 3px solid;
-  padding: 1rem 0;
+    & span {
+      @apply inline-block;
+      @apply px-2;
+
+      @apply whitespace-pre;
+    }
+  }
 }
 </style>
