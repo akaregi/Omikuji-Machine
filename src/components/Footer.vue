@@ -5,19 +5,17 @@
   </footer>
 </template>
 
-<style scoped>
+<style lang="postcss" scoped>
 .footer {
-  margin: 2rem 0;
+  @apply my-8;
+  @apply text-lg text-gray-500;
 
-  font-size: 1rem;
-}
+  a {
+    @apply text-indigo-500;
 
-p {
-  margin: 0;
-}
-
-a, a:visited {
-  text-decoration: none;
-  color: #502fd4;
+    &:hover {
+      @apply text-indigo-800;
+    }
+  }
 }
 </style>

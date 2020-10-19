@@ -2,8 +2,10 @@
   <main class="omikuji">
     <Header />
 
-    <input class="name" type="text" v-model="state.name">
-    <button class="update" v-on:click="update">引き直す</button>
+    <div class="legend">
+      <input class="name" type="text" v-model="state.name">
+      <button class="update" v-on:click="update">引き直す</button>
+    </div>
 
     <Result :state="state" />
 
@@ -55,30 +57,30 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-button, input {
-  padding: .5rem;
+<style lang="postcss" scoped>
+.omikuji {
+  @apply m-8 flex flex-col content-center text-center;
 }
 
-button {
-  background: transparent;
+.legend {
+  @apply flex justify-center;
 
-  border: 3px solid #d15151;
-  border-radius: 5px;
-}
+  & button, & input {
+    @apply mx-2 p-2 px-4;
+  }
 
-button:focus, input:focus {
-  border: 3px solid black;
-  outline: none;
-}
+  & input {
+    @apply text-center rounded-md shadow;
+  }
 
-input {
-  display: inline-block;
+  & button {
+    @apply text-white bg-gray-600;
+    @apply rounded-md shadow-lg;
+    @apply transition duration-300 ease-in-out;
 
-  margin-right: 1rem;
-  border: 3px solid #efefef;
-
-  text-align: center;
-
+    &:hover {
+      @apply bg-red-500;
+    }
+  }
 }
 </style>

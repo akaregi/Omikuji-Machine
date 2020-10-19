@@ -14,27 +14,14 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="postcss">
 body {
-  font-size: 24px;
-  font-family:
-    BlinkMacSystemFont,-apple-system,
-    Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
-    Fira Sans,Droid Sans,Helvetica Neue,Helvetica,Arial,
-    "Yu Gothic Medium",YuGothic,sans-serif;
+  @apply
+    text-2xl font-sans text-gray-800
+    antialiased subpixel-antialiased
+    leading-normal tracking-tight;
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "palt";
-
-  color: #2c3e50;
-  text-align: center;
-  line-height: 1.47;
-
-  max-width: 500px;
-
-  margin: 0 auto !important;
-  margin-top: 6rem !important;
-  padding: 2rem;
+  @apply max-w-screen-sm mr-auto ml-auto !important;
+  @apply bg-gray-100;
 }
 </style>
