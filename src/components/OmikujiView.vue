@@ -63,23 +63,34 @@ export default defineComponent({
 }
 
 .legend {
-  @apply flex justify-center;
+  @apply flex flex-wrap justify-center;
 
   & button, & input {
-    @apply mx-2 p-2 px-4;
+    @apply m-2 p-2 px-4;
+    @apply outline-none;
+
+    @apply transition duration-300 ease-in-out;
   }
 
   & input {
     @apply text-center rounded-md shadow;
+    @apply border;
+
+    &:focus {
+      @apply border border-green-400;
+    }
   }
 
   & button {
     @apply text-white bg-gray-600;
     @apply rounded-md shadow-lg;
-    @apply transition duration-300 ease-in-out;
 
     &:hover {
       @apply bg-red-500;
+    }
+
+    &:active {
+      @apply bg-red-600;
     }
   }
 }
