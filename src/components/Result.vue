@@ -57,6 +57,7 @@ export default defineComponent({
   @apply cursor-pointer select-none;
   @apply rounded-md shadow-xl bg-white;
   @apply transition duration-300 ease-in-out;
+  @apply border border-gray-200;
 
   &:active {
     @apply bg-green-200;
