@@ -10,7 +10,7 @@
   @apply my-8;
   @apply text-lg text-gray-500;
 
-  a {
+  & a {
     @apply text-indigo-500;
 
     &:hover {
