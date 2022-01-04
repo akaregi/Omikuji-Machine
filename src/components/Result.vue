@@ -38,7 +38,7 @@ export default defineComponent({
         `${state?.name ?? 'こいつ'}の今日の運勢は **${state?.result ?? '無'}** であります` +
         reset +
         '#今日の御神籤 #御神籤\n' +
-        'https://omikuji.fedyya.net'
+        'https://omikuji.azure.icu'
       )
     }
 
