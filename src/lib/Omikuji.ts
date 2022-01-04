@@ -1,5 +1,13 @@
-import candicates from '@/lib/Candicates.ts'
+import { funny, tradition } from './candicates'
 
-export function choice () {
+export function lottery(traditional?: boolean) {
+  if (traditional) {
+    return draw(tradition)
+  }
+
+  return draw(funny.concat(tradition))
+}
+
+function draw(candicates: string[]): string {
   return candicates[Math.floor(Math.random() * candicates.length)]
 }

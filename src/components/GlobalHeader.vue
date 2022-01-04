@@ -10,16 +10,13 @@
 <style lang="postcss" scoped>
 .header {
   @apply my-8;
-
   & .title {
     @apply flex flex-wrap justify-center;
     @apply py-4;
     @apply leading-tight text-4xl;
-
     & span {
       @apply inline-block;
       @apply px-2;
-
       @apply whitespace-pre;
     }
   }

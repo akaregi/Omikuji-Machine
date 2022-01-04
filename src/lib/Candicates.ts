@@ -1,13 +1,23 @@
-export default [
+export const tradition = [
   // Traditional
   '📜 大凶',
   '📜 凶',
-  '📜 並',
-  '📜 吉',
   '📜 末吉',
+  '📜 末吉',
+  '📜 小吉',
+  '📜 小吉',
+  '📜 吉',
+  '📜 吉',
+  '📜 吉',
+  '📜 中吉',
+  '📜 中吉',
+  '📜 中吉',
   '📜 中吉',
   '📜 大吉',
+  '📜 大吉',
+]
 
+export const funny = [
   // Good
   'ウルトラC',
   '有頂天',
