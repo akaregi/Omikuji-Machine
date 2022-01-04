@@ -1,4 +1,4 @@
-import { funny, tradition } from './candicates'
+import { funny, tradition } from './candidate'
 
 export function lottery(traditional?: boolean) {
   if (traditional) {
