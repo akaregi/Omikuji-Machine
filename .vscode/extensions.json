@@ -2,6 +2,7 @@
   "recommendations": [
     "johnsoncodehk.volar",
     "dbaeumer.vscode-eslint",
-    "ducksoupdev.vue2"
+    "ducksoupdev.vue2",
+    "bradlc.vscode-tailwindcss"
   ]
 }
