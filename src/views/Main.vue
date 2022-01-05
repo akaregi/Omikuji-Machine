@@ -3,9 +3,11 @@ import { onMounted, reactive, ref, watch } from 'vue'
 import { omikujiResultDB } from '../database/omikujiResultDB'
 import { preferenceDB } from '../database/preferenceDB'
 import { Preference } from '../database/schema'
+import { constants } from '../config/constant'
 import { lottery } from '../lib/omikuji'
 
 const result = ref('Please wait...')
+const clipboard = ref('')
 const count = ref(0)
 
 // Initializes preference
@@ -15,6 +17,23 @@ const state = reactive({
   useMarkdown: false,
   showCount: false
 })
+
+const generateResultText = (): string => {
+  const lotteryText = state.useMarkdown
+    ? `**${result.value}**`
+    : result.value
+
+  const resetText = state.showCount && count.value >= 1
+    ? `（引き直し${count.value}回）\n`
+    : '\n'
+
+  const text =
+    `${state.name}の今日の運勢は ${lotteryText} であります` +
+    resetText +
+    `${constants.getHashtags()}`
+
+  return text
+}
 
 // Loads preferences from the database and merge them into state
 onMounted(async () => {
@@ -33,6 +52,8 @@ onMounted(async () => {
     date: Date.now(),
     result: result.value
   })
+
+  clipboard.value = generateResultText()
 })
 
 watch(() => state, async (state) => {
@@ -53,26 +74,14 @@ const update = async () => {
 }
 
 const onCopy = () => {
-  const lotteryText = state.useMarkdown
-    ? `**${result.value}**`
-    : result.value
-
-  const resetText = state.showCount && count.value >= 1
-    ? `（引き直し${count.value}回）\n`
-    : '\n'
-
-  navigator.clipboard.writeText(
-    `${state.name}の今日の運勢は ${lotteryText} であります` +
-    resetText +
-    '#伊予みくじ #御神籤処\n' +
-    'https://omikuji.azure.icu'
-  )
+  clipboard.value = generateResultText() + `\n${constants.address}`
+  navigator.clipboard.writeText(clipboard.value)
 }
 </script>
 
 <template>
   <main class="omikuji">
-    <div class="form">
+    <section class="form">
       <input
         id="name"
         v-model="state.name"
@@ -86,9 +95,9 @@ const onCopy = () => {
       >
         引く
       </button>
-    </div>
+    </section>
 
-    <div
+    <section
       class="result"
       @click="onCopy"
     >
@@ -96,12 +105,20 @@ const onCopy = () => {
         <span>{{ state.name }}の今日の運勢は</span>
         <span class="wow">{{ result }}</span>
         <span>であります</span>
-        <span class="tag">#伊予みくじ #御神籤処</span>
+        <span class="tag">{{ constants.getHashtags() }}</span>
       </p>
-      <p class="footnote">
-        ※ 枠内をタップするとコピーできます
-      </p>
-    </div>
+      <section class="footnote">
+        <p>※ 枠内をタップするとコピーできます</p>
+        <div class="twitter">
+          <a
+            href="https://twitter.com/share"
+            class="twitter-share-button"
+            data-lang="ja"
+            :data-text="clipboard"
+          >ツイート</a>
+        </div>
+      </section>
+    </section>
 
     <details class="config">
       <summary>詳細設定（保存されます）</summary>
