@@ -35,6 +35,20 @@ const generateResultText = (): string => {
   return text
 }
 
+const generateTweetUrl = () => {
+  const url = 
+    'https://twitter.com/share' +
+    `?url=${constants.address}` +
+    `&hashtags=${constants.hashtags}` +
+    `&text=${clipboard.value}`
+
+  return encodeURI(url)
+}
+
+const onCopy = () => {
+  navigator.clipboard.writeText(clipboard.value + `\n${constants.address}`)
+}
+
 // Loads preferences from the database and merge them into state
 onMounted(async () => {
   // NOTE: Dexies.js will NOT work in the phase of setup
@@ -54,14 +68,18 @@ onMounted(async () => {
   })
 })
 
+// If some preferences are updated, then write them into DB
 watch(() => state, async (state) => {
   await preferenceDB.put({ ...state })
 }, { deep: true })
 
+// NOTE: Just updates the clipboard's value
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 watch(result, (_) => {
   clipboard.value = generateResultText()
 })
 
+// If draws the lottery again...
 const update = async () => {
   result.value = lottery(state.useCommon)
   count.value++
@@ -73,20 +91,6 @@ const update = async () => {
   })
 
   console.log(`Attempt #${id} was written to the database.`)
-}
-
-const onCopy = () => {
-  navigator.clipboard.writeText(clipboard.value + `\n${constants.address}`)
-}
-
-const generateTweetUrl = () => {
-  const url = 
-    'https://twitter.com/share' +
-    `?url=${constants.address}` +
-    `&hashtags=${constants.hashtags}` +
-    `&text=${clipboard.value}`
-
-  return encodeURI(url)
 }
 </script>
 
