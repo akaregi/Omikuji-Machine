@@ -190,6 +190,7 @@ const onCopy = () => {
 .result {
   & .footnote {
     @apply text-xl mt-4;
+    @apply flex flex-wrap gap-2 justify-center items-center;
   }
 }
 
