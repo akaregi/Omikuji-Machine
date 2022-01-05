@@ -52,13 +52,15 @@ onMounted(async () => {
     date: Date.now(),
     result: result.value
   })
-
-  clipboard.value = generateResultText()
 })
 
 watch(() => state, async (state) => {
   await preferenceDB.put({ ...state })
 }, { deep: true })
+
+watch(result, (_) => {
+  clipboard.value = generateResultText()
+})
 
 const update = async () => {
   result.value = lottery(state.useCommon)
@@ -74,8 +76,17 @@ const update = async () => {
 }
 
 const onCopy = () => {
-  clipboard.value = generateResultText() + `\n${constants.address}`
-  navigator.clipboard.writeText(clipboard.value)
+  navigator.clipboard.writeText(clipboard.value + `\n${constants.address}`)
+}
+
+const generateTweetUrl = () => {
+  const url = 
+    'https://twitter.com/share' +
+    `?url=${constants.address}` +
+    `&hashtags=${constants.hashtags}` +
+    `&text=${clipboard.value}`
+
+  return encodeURI(url)
 }
 </script>
 
@@ -109,14 +120,13 @@ const onCopy = () => {
       </p>
       <section class="footnote">
         <p>※ 枠内をタップするとコピーできます</p>
-        <div class="twitter">
+        <button>
           <a
-            href="https://twitter.com/share"
-            class="twitter-share-button"
-            data-lang="ja"
-            :data-text="clipboard"
+            target="_blank"
+            rel="noopener noreferrer"
+            :href="generateTweetUrl()"
           >ツイート</a>
-        </div>
+        </button>
       </section>
     </section>
 
@@ -178,7 +188,7 @@ const onCopy = () => {
     @apply rounded-md shadow-lg;
 
     &:hover {
-      @apply bg-green-600;
+      @apply bg-green-500;
     }
 
     &:active {
@@ -191,6 +201,23 @@ const onCopy = () => {
   & .footnote {
     @apply text-xl mt-4;
     @apply flex flex-wrap gap-2 justify-center items-center;
+
+    & button {
+      @apply px-4;
+      @apply transition duration-300 ease-in-out;
+      @apply text-white;
+      @apply rounded-md shadow-lg;
+
+      background-color: rgb(29, 161, 242);
+
+      &:hover {
+        @apply bg-blue-500;
+      }
+
+      &:active {
+        @apply bg-blue-600;
+      }
+    }
   }
 }
 
