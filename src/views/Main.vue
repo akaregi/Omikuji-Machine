@@ -22,18 +22,16 @@ onMounted(async () => {
   const preferences = await preferenceDB.get({ id: 1 })
 
   if (preferences) {
-    const persist: Omit<Preference, 'id'> = preferences
-    Object.assign(state, persist)
+    Object.assign(state, preferences as Omit<Preference, 'id'>)
   }
 
-  const initialResult = lottery(state.useCommon)
-  result.value = initialResult
+  result.value = lottery(state.useCommon)
 
   // Writes the lottery result on loading
   await omikujiResultDB.add({
     name: state.name,
     date: Date.now(),
-    result: initialResult
+    result: result.value
   })
 })
 
@@ -55,13 +53,13 @@ const update = async () => {
 }
 
 const onCopy = () => {
-  const resetText = state.showCount && count.value >= 1
-    ? `（引き直し${count.value}回）\n`
-    : '\n'
-
   const lotteryText = state.useMarkdown
     ? `**${result.value}**`
     : result.value
+
+  const resetText = state.showCount && count.value >= 1
+    ? `（引き直し${count.value}回）\n`
+    : '\n'
 
   navigator.clipboard.writeText(
     `${state.name}の今日の運勢は ${lotteryText} であります` +
@@ -74,7 +72,7 @@ const onCopy = () => {
 
 <template>
   <main class="omikuji">
-    <div class="legend">
+    <div class="form">
       <input
         id="name"
         v-model="state.name"
@@ -86,71 +84,73 @@ const onCopy = () => {
         class="update"
         @click="update"
       >
-        引いてみる
+        引く
       </button>
     </div>
+
+    <div
+      class="result"
+      @click="onCopy"
+    >
+      <p class="copy">
+        <span>{{ state.name }}の今日の運勢は</span>
+        <span class="wow">{{ result }}</span>
+        <span>であります</span>
+        <span class="tag">#伊予みくじ #御神籤処</span>
+      </p>
+      <p class="footnote">
+        ※ 枠内をタップするとコピーできます
+      </p>
+    </div>
+
+    <details class="config">
+      <summary>詳細設定（保存されます）</summary>
+      <input
+        id="traditional"
+        v-model="state.useCommon"
+        type="checkbox"
+        title="Use traditional only?"
+      >
+      <label for="traditional">普通の御神籤だけを引くようにする</label>
+      <br>
+      <input
+        id="markdown"
+        v-model="state.useMarkdown"
+        type="checkbox"
+        title="Use markdown?"
+      >
+      <label for="markdown">Markdown を有効にする（コピーに影響します）</label>
+      <br>
+      <input
+        id="showCount"
+        v-model="state.showCount"
+        type="checkbox"
+        title="Show count?"
+      >
+      <label for="showCount">引き直しの回数を表示する</label>
+    </details>
   </main>
-
-  <div
-    class="result"
-    @click="onCopy"
-  >
-    <p class="copy">
-      <span>{{ state.name }}の今日の運勢は</span>
-      <span class="wow">{{ result }}</span>
-      <span>であります</span>
-      <span class="tag">#伊予みくじ #御神籤処</span>
-    </p>
-    <p class="footnote">
-      ※ 枠内をタップするとコピーできます
-    </p>
-  </div>
-
-  <details class="config">
-    <summary>詳細設定（保存されます）</summary>
-    <input
-      id="traditional"
-      v-model="state.useCommon"
-      type="checkbox"
-      title="Use traditional only?"
-    >
-    <label for="traditional">普通の御神籤だけを引くようにする</label>
-    <br>
-    <input
-      id="markdown"
-      v-model="state.useMarkdown"
-      type="checkbox"
-      title="Use markdown?"
-    >
-    <label for="markdown">Markdown を有効にする（コピーに影響します）</label>
-    <br>
-    <input
-      id="showCount"
-      v-model="state.showCount"
-      type="checkbox"
-      title="Show count?"
-    >
-    <label for="showCount">引き直しの回数を表示する</label>
-  </details>
 </template>
 
 <style lang="postcss" scoped>
 .omikuji {
-  @apply m-8 flex flex-col content-center;
+  @apply m-8 flex flex-col content-center gap-4;
 }
 
-.legend {
-  @apply flex flex-wrap justify-center;
+.form {
+  @apply flex flex-wrap justify-center gap-4;
   & button,
   & input {
-    @apply mx-4 my-1 p-2 px-4;
+    @apply p-2 px-4;
     @apply outline-none;
     @apply transition duration-300 ease-in-out;
+    @apply flex-1;
   }
 
   & input {
     @apply text-center rounded-md shadow;
     @apply border;
+    
     &:focus {
       @apply border border-green-400;
     }
@@ -171,11 +171,13 @@ const onCopy = () => {
 }
 
 .result {
-  @apply m-8;
+  & .footnote {
+    @apply text-xl mt-4;
+  }
 }
 
 .copy {
-  @apply my-4 p-4;
+  @apply p-4 mb-2;
   @apply cursor-pointer select-none;
   @apply rounded-md shadow-xl bg-white;
   @apply transition duration-300 ease-in-out;
