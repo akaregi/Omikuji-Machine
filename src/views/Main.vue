@@ -134,7 +134,7 @@ const onCopy = () => {
 
 <style lang="postcss" scoped>
 .omikuji {
-  @apply m-8 flex flex-col content-center gap-4;
+  @apply m-4 flex flex-col content-center gap-4;
 }
 
 .form {
@@ -150,7 +150,7 @@ const onCopy = () => {
   & input {
     @apply text-center rounded-md shadow;
     @apply border;
-    
+
     &:focus {
       @apply border border-green-400;
     }
